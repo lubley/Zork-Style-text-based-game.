@@ -15,6 +15,7 @@ public class Inventory {
     public int hasItem(String item)
     {
         //Returns the position of the item in the array if it is in the array. Otherwise it returns -1
+    return -1;
     }
 
     public void removeItem(String item)
@@ -25,5 +26,6 @@ public class Inventory {
     public String displayInventory()
     {
         // Returns a String of all items separated by spaces (note that there is a space after the last item as well).
+        return "";
     }
 }

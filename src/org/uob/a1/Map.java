@@ -15,7 +15,8 @@ public class Map {
 
     public String display()
     {
-        
+
+        return "";
     }
     
 }
