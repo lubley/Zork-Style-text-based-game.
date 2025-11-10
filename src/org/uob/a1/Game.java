@@ -44,11 +44,11 @@ public class Game {
 
         throneroom = new Room("Throne Room","A grand room with the King sitting on his Throne, you may speak to him",'T', new Position(2,1));
         garden = new Room("Garden","A beautiful lush garden filled with delicately grown vegetables (lettuce) and the hungry royal cat",'G',new Position(1,2));
-        northHall = new Room("North Hall","The north of the Grand Hallway leading to the Throne Room, Garden and Dining Hall",'H',new Position(2,2));
+        northHall = new Room("North Hall","The north of the Grand Hallway leading to the Throne Room(north), Garden(west) and Dining Hall(east)",'H',new Position(2,2));
         diningHall = new Room("Dining Hall","A large dining hall with a long table where the food is served for the king",'D',new Position(3,2));
         centreHall = new Room("Centre Hall","The centre of the grand Hallway it connects to the north and south of the grand hall",'H',new Position(2,3));
-        southHall = new Room("South Hall","The south of the grand Hallway, leading to the meat room, bakery and Kitchen",'H',new Position(2,4));
-        kitchen = new Room("Kitchen","The palaces great kitchen where you can cook anything you can dream of! You can access the freezer from here",'K',new Position(3,4));
+        southHall = new Room("South Hall","The south of the grand Hallway, leading to the meat room(west), bakery(south) and Kitchen(east)",'H',new Position(2,4));
+        kitchen = new Room("Kitchen","The palaces great kitchen large counter top at the centre. You can access the freezer from here(east)",'K',new Position(3,4));
         meatRoom = new Room("Meat Room","Filled with fish and meat for all of the Kings favourite recipes, there is a fish and burger patty lying on the shelf",'M',new Position(1,4));
         bakery = new Room("Bakery","The palaces finest bakery filled with buns and pastries.",'B',new Position(2,5));
         freezer = new Room("Freezer","A chilling freezer with cheese blocks and other cold ingredients",'F',new Position(4,4));
@@ -75,7 +75,7 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Escape the palace");
         System.out.println("Complete the tasks given to you by the King to leave, you are a Royal Chef at the palace");
-        System.out.println("You are currently in the Throne Room, the king is sitting on the throne at the end of the room, type 'talk king' to speak to the king");
+        System.out.println("You are currently in the Throne Room, at the end there is grand throne ");
         System.out.println("Type 'help' for a list of commands!");
 
         while(gameOn == true)
@@ -89,7 +89,7 @@ public class Game {
                 case "quit":
                     gameOn = false;
                     System.out.println("Thanks for playing");
-                    System.out.println(score.getScore());
+                    System.out.println("Your score is " + score.getScore());
                     break;
                 case "help":
                     System.out.println("Commands: move <direction>, talk, look, look <feature>, look <item>, inventory, score, map, quit");
@@ -105,6 +105,15 @@ public class Game {
                     break;
                 case "inventory":
                     System.out.println(inventory.displayInventory());
+                    break;
+                case "talk king":
+                    System.out.println("Welcome my royal chef, Today I am craving a delicious cheese burger with lettuce, serve it to me in the dining hall and please feed my dear cat in the garden too");
+                    break;
+                case "look throne":
+                    System.out.println("The king is sitting on the throne type 'talk king' to speak to him");
+                    break;
+                case "look counter":
+                    System.out.println("Make the kings burger on this counter top. Type 'make burger' once you have all the ingredients to start making the burger");
                     break;
                 case "make burger":
                     if (inventory.hasItem("lettuce") != -1 &&
@@ -143,6 +152,11 @@ public class Game {
                         System.out.println("The royal cat has been fed. Puzzle #2 Complete! Your score has been updated.");
                         score.solvePuzzle();
                     }
+                    else
+                    {
+                        System.out.println("You do not have anything to feed the cat with.");
+                    }
+                    break;
                 case "take cheese":
                     System.out.println("A cheese block has been added to your inventory.");
                     inventory.addItem("cheese");
@@ -166,7 +180,8 @@ public class Game {
                 default:
                     if (input.startsWith("move")) {
                         move(input);
-                    } else {
+                    } 
+                    else {
                         System.out.println("I don't understand that command.");
                     }
                     break;
