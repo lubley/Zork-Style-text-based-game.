@@ -119,7 +119,7 @@ public class Game {
                     if (inventory.hasItem("lettuce") != -1 &&
                     inventory.hasItem("bun") != -1 &&
                     inventory.hasItem("patty") != -1 &&
-                    inventory.hasItem("cheese") != -1) 
+                    inventory.hasItem("cheese") != -1 && currentRoom.getName().equals("Kitchen"))
                     {
                         inventory.removeItem("lettuce");
                         inventory.removeItem("bun");
@@ -134,7 +134,7 @@ public class Game {
                     }
                     break;
                 case "place burger":
-                    if(inventory.hasItem("burger") != - 1)
+                    if(inventory.hasItem("burger") != - 1 && currentRoom.getName().equals("Dining Hall"))
                     {
                         
                         System.out.println("The burger has been placed on the dining table. Puzzle #1 Complete! Your score has been updated.");
@@ -147,7 +147,7 @@ public class Game {
                     break;
 
                 case "feed cat":
-                    if(inventory.hasItem("fish") != -1)
+                    if(inventory.hasItem("fish") != -1 && currentRoom.getName().equals("Garden"))
                     {
                         System.out.println("The royal cat has been fed. Puzzle #2 Complete! Your score has been updated.");
                         score.solvePuzzle();
@@ -172,6 +172,9 @@ public class Game {
                 case "take lettuce":
                     System.out.println("Lettuce has been added to your inventory.");
                     inventory.addItem("lettuce");
+                    break;
+                case "look lettuce":
+                    System.out.println("You may use this lettuce to create a burger in the kitchen");
                     break;
                 case "take fish":
                     System.out.println("A fish has been added to your inventory.");
