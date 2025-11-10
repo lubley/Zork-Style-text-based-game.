@@ -9,7 +9,7 @@ public class Score {
     
     public Score(int startingScore)
     {
-        score=100;
+        this.score = startingScore;
         roomsVisited= 0;
         puzzles= 0;
         
