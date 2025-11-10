@@ -40,6 +40,7 @@ public class Game {
         String fish = "fish";
         String bun = "bun";
         String cheese = "cheese";
+        String burger = "burger";
 
         throneroom = new Room("Throne Room","A grand room with the King sitting on his Throne, you may speak to him",'T', new Position(2,1));
         garden = new Room("Garden","A beautiful lush garden filled with delicately grown vegetables (lettuce) and the hungry royal cat",'G',new Position(1,2));
@@ -48,7 +49,7 @@ public class Game {
         centreHall = new Room("Centre Hall","The centre of the grand Hallway it connects to the north and south of the grand hall",'H',new Position(2,3));
         southHall = new Room("South Hall","The south of the grand Hallway, leading to the meat room, bakery and Kitchen",'H',new Position(2,4));
         kitchen = new Room("Kitchen","The palaces great kitchen where you can cook anything you can dream of! You can access the freezer from here",'K',new Position(3,4));
-        meatRoom = new Room("Meat Room","Filled with fish and meat for all of the Kings favourite recipes",'M',new Position(1,4));
+        meatRoom = new Room("Meat Room","Filled with fish and meat for all of the Kings favourite recipes, there is a fish and burger patty lying on the shelf",'M',new Position(1,4));
         bakery = new Room("Bakery","The palaces finest bakery filled with buns and pastries.",'B',new Position(2,5));
         freezer = new Room("Freezer","A chilling freezer with cheese blocks and other cold ingredients",'F',new Position(4,4));
 
@@ -88,7 +89,7 @@ public class Game {
                 case "quit":
                     gameOn = false;
                     System.out.println("Thanks for playing");
-                    System.out.println(score);
+                    System.out.println(score.getScore());
                     break;
                 case "help":
                     System.out.println("Commands: move <direction>, talk, look, look <feature>, look <item>, inventory, score, map, quit");
@@ -101,6 +102,66 @@ public class Game {
                     break;
                 case "score":
                     System.out.println("Score: "+ score.getScore());
+                    break;
+                case "inventory":
+                    System.out.println(inventory.displayInventory());
+                    break;
+                case "make burger":
+                    if (inventory.hasItem("lettuce") != -1 &&
+                    inventory.hasItem("bun") != -1 &&
+                    inventory.hasItem("patty") != -1 &&
+                    inventory.hasItem("cheese") != -1) 
+                    {
+                        inventory.removeItem("lettuce");
+                        inventory.removeItem("bun");
+                        inventory.removeItem("patty");
+                        inventory.removeItem("cheese");
+                        inventory.addItem("burger");
+                        System.out.println("You have made a burger! Go to the dining hall to server the burger to the king");
+                    }
+                    else
+                    {
+                        System.out.println("Sorry you do not have all the items to cook a burger.");
+                    }
+                    break;
+                case "place burger":
+                    if(inventory.hasItem("burger") != - 1)
+                    {
+                        
+                        System.out.println("The burger has been placed on the dining table. Puzzle #1 Complete! Your score has been updated.");
+                        score.solvePuzzle();
+                    }
+                    else
+                    {
+                        System.out.println("Sorry you have not completed the burger puzzle");
+                    }
+                    break;
+
+                case "feed cat":
+                    if(inventory.hasItem("fish") != -1)
+                    {
+                        System.out.println("The royal cat has been fed. Puzzle #2 Complete! Your score has been updated.");
+                        score.solvePuzzle();
+                    }
+                case "take cheese":
+                    System.out.println("A cheese block has been added to your inventory.");
+                    inventory.addItem("cheese");
+                    break;
+                case "take patty":
+                    System.out.println("A burger patty has been added to your inventory.");
+                    inventory.addItem("patty");
+                    break;
+                case "take bun":
+                    System.out.println("A burger bun has been added to your inventory.");
+                    inventory.addItem("bun");
+                    break;
+                case "take lettuce":
+                    System.out.println("Lettuce has been added to your inventory.");
+                    inventory.addItem("lettuce");
+                    break;
+                case "take fish":
+                    System.out.println("A fish has been added to your inventory.");
+                    inventory.addItem("fish");
                     break;
                 default:
                     if (input.startsWith("move")) {
@@ -115,6 +176,7 @@ public class Game {
     }
     public void move(String input)
     {
+        score.visitRoom();
         switch(currentRoom.getName())
         {
             case "Throne Room":
@@ -181,18 +243,24 @@ public class Game {
                     currentRoom = centreHall; 
                     System.out.println("You are now in the " + currentRoom.getName()); }
                 else if (input.equals("move south")){
-                    currentRoom = bakery; 
+                    currentRoom = bakery;
+                    System.out.println("You are now in the " + currentRoom.getName());
                 }
                 else if (input.equals("move west")) {
-                    currentRoom = meatRoom; }
+                    currentRoom = meatRoom;
+                    System.out.println("You are now in the " + currentRoom.getName());
+                }
                 else if (input.equals("move east")) {
-                    currentRoom = kitchen; }
+                    currentRoom = kitchen;
+                    System.out.println("You are now in the " + currentRoom.getName());
+                }
                 else {
                     System.out.println("You can't go that way!"); }
                 break;
             case "Meat Room":
                 if(input.equals("move east")){
                     currentRoom = southHall;
+                    System.out.println("You are now in the " + currentRoom.getName()); 
                 }
                 else {
                     System.out.println("You cant go that way!!");
@@ -201,6 +269,7 @@ public class Game {
             case "Bakery":
                 if(input.equals("move north")){
                     currentRoom = southHall;
+                    System.out.println("You are now in the " + currentRoom.getName()); 
                 }
                 else {
                     System.out.println("You cant go that way!!");
@@ -209,9 +278,11 @@ public class Game {
             case "Kitchen":
                 if(input.equals("move west")){
                     currentRoom = southHall;
+                    System.out.println("You are now in the " + currentRoom.getName());
                 }
                 else if(input.equals("move east")){
                     currentRoom = freezer;
+                    System.out.println("You are now in the " + currentRoom.getName());
                 }
                 else {
                     System.out.println("You cant go that way!!");
@@ -220,6 +291,7 @@ public class Game {
             case "Freezer":
                 if(input.equals("move west")){
                     currentRoom = kitchen;
+                    System.out.println("You are now in the " + currentRoom.getName());
                 }
                 else {
                     System.out.println("You cant go that way!!");
